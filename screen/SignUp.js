@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text, Alert } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
 
 const Signup = () => {
@@ -10,15 +10,19 @@ const Signup = () => {
 
   const handleSignup = async () => {
     try {
-      const response = await axios.post('http://your-server-ip-or-url/signup', {
+      const response = await axios.post('https://mishicoin-backend.vercel.app/api/signup', {
         name,
         email,
         phone,
-        password
+        password,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
 
-      if (response.data.success) {
-        Alert.alert('Signup Successful', 'You have successfully signed up!');
+      if (response.data.status === 'success') {
+        Alert.alert('Signup Successful', response.data.message);
       } else {
         Alert.alert('Signup Failed', response.data.message);
       }
@@ -30,33 +34,10 @@ const Signup = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        placeholder="Name"
-        value={name}
-        onChangeText={setName}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Phone Number"
-        value={phone}
-        onChangeText={setPhone}
-        keyboardType="phone-pad"
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        style={styles.input}
-      />
+      <TextInput placeholder="Name" value={name} onChangeText={setName} style={styles.input} />
+      <TextInput placeholder="Email" value={email} onChangeText={setEmail} keyboardType="email-address" style={styles.input} />
+      <TextInput placeholder="Phone Number" value={phone} onChangeText={setPhone} keyboardType="phone-pad" style={styles.input} />
+      <TextInput placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry style={styles.input} />
       <Button title="Sign Up" onPress={handleSignup} />
     </View>
   );
