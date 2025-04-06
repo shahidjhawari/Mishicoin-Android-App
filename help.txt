@@ -1,2 +1,4 @@
 .\gradlew assembleRelease
 .\gradlew bundleRelease
+
+npx react-native run-android
