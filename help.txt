@@ -1,4 +1,5 @@
 .\gradlew assembleRelease
 .\gradlew bundleRelease
+./gradlew clean
 
 npx react-native run-android
